@@ -20,11 +20,13 @@ function RecieverChat({message}) {
 export default RecieverChat;
 
 const styles = StyleSheet.create({
-  chatsContainer: {},
+  chatsContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   chatContainer: {
     margin: 5,
     padding: 5,
-    height: 50,
     flexDirection: 'row',
     alignItems: 'flex-start',
   },
@@ -52,5 +54,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '400',
     textAlign: 'justify',
+    paddingVertical: 5,
   },
 });
