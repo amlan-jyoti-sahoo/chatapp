@@ -18,7 +18,9 @@ function ChatCard({item}) {
         <View style={styles.TextSubCard}>
           <Text style={styles.Name}>{item.senderName}</Text>
           <View style={{flexDirection: 'row', marginTop: 5}}>
-            <Text style={styles.lastMessage}>Hi how are you</Text>
+            <Text style={styles.lastMessage}>
+              {item.chatsHistory[item.chatsHistory.length - 1].sent}
+            </Text>
             <Text>: 7.00pm</Text>
           </View>
         </View>
