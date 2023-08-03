@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   chatText: {
     fontSize: 18,
     color: 'white',
-    fontWeight: '400',
-    textAlign: 'justify',
+    fontWeight: '500',
+    textAlign: 'left',
     paddingVertical: 5,
   },
 });

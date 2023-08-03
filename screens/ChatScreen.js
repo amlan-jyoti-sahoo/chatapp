@@ -1,5 +1,11 @@
-import {StyleSheet, View, TextInput, FlatList} from 'react-native';
-import React, {useLayoutEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import RecieverChat from '../componets/RecieverChat';
 import SenderChat from '../componets/SenderChat';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,6 +14,8 @@ import IconButton from '../componets/UI/IconButton';
 function ChatScreen({route, navigation}) {
   const {item} = route.params;
   const senderProfileImage = item.profileImage;
+  const [message, setMessage] = useState('');
+  const [chatMessages, setchatMessages] = useState(item.chatsHistory);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -29,11 +37,23 @@ function ChatScreen({route, navigation}) {
     );
   }
 
+  function messageInputHandler(text) {
+    setMessage(text);
+  }
+
+  function sendMessageHandler() {
+    if (message != '') {
+      const tempMsgs = [...chatMessages];
+      setchatMessages([...tempMsgs, {sent: message}]);
+    }
+    setMessage('');
+  }
+
   return (
     <View style={styles.Container}>
       <View style={styles.renderChatContaienr}>
         <FlatList
-          data={item.chatsHistory}
+          data={chatMessages}
           renderItem={renderChats}
           keyExtractor={(item, index) => `${index}`}
         />
@@ -52,13 +72,19 @@ function ChatScreen({route, navigation}) {
           <TextInput
             style={styles.searchPersonInput}
             placeholder="Write message"
+            value={message}
             underlineColorAndroid="transparent"
             keyboardType="default"
-            autoCapitalize="none"
             autoCorrect={false}
             returnKeyType="done"
+            onChangeText={messageInputHandler}
           />
-          <IconButton icon={'send'} size={30} color={'#943f3f'} />
+          <IconButton
+            icon={'send'}
+            size={30}
+            color={'#943f3f'}
+            onPress={sendMessageHandler}
+          />
         </View>
       </View>
     </View>

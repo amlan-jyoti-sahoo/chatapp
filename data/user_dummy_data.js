@@ -38,16 +38,14 @@ export const User_Dummy_Data = [
     senderName: 'Nitin Kalokhe sir',
     profileImage: require('../assets/images/nitinsir.jpeg'),
     chatsHistory: [
-      {sent: 'hi, Elon bhai all Good', recieve: 'Haan bro, badhiya bro'},
       {
-        sent: 'Aur next rocket kab lauch kar rahe ho!',
-        recieve: 'ek week mein bro..',
+        sent: 'hi, sir Good Morning',
+        recieve: 'Yeah Amlan, Good morning. Do you fix that bug?',
       },
       {
-        sent: 'yaar, mereko bhi jana tha International space station mein',
-        recieve: 'Thik hai, come to us bro',
+        sent: 'Yeah, I will completed by Today',
+        recieve: 'Okay...',
       },
-      {sent: 'Pakka bhejo to', recieve: 'Haan bro trust me'},
     ],
   },
   {
