@@ -13,62 +13,39 @@ import RecieverChat from '../componets/RecieverChat';
 import SenderChat from '../componets/SenderChat';
 import {getFormattedDate} from '../util/date';
 import Icon from 'react-native-vector-icons/Ionicons';
+import IconButton from '../componets/UI/IconButton';
 
 function ChatScreen({route, navigation}) {
-  const {id, name} = route.params;
+  const {item} = route.params;
+  const senderProfileImage = item.profileImage;
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: name,
+      title: item.senderName,
     });
   }, []);
 
   function renderChats({item}) {
-    const time = new Date(item.chats.sent[0].timestamp);
-    const timestamp1 = getFormattedDate(time);
-    return <Text>{timestamp1}</Text>;
+    return (
+      <>
+        <SenderChat message={item.sent} />
+        <RecieverChat
+          message={item.recieve}
+          profileImage={senderProfileImage}
+        />
+      </>
+    );
   }
 
   return (
     <View style={styles.Container}>
-      <View style={{height: 730}}>
-        <ScrollView>
-          <RecieverChat message={'Hi Bro, how are you?'} />
-          <SenderChat
-            message={
-              'I am fine bro, what about you. what about your next spaceX program. I wanna join your space progarm.'
-            }
-          />
-          <RecieverChat message={'Yeah Fine bro! come to United State'} />
-          <SenderChat message={'Okay bro. Let meet at ISS'} />
-          <RecieverChat message={'Hi Bro, how are you?'} />
-          <SenderChat
-            message={
-              'I am fine bro, what about you. what about your next spaceX program. I wanna join your space progarm.'
-            }
-          />
-          <RecieverChat
-            message={'Yeah Fine bro! come to United State by tommorow'}
-          />
-          <SenderChat message={'Okay bro. Let meet at ISS'} />
-          <RecieverChat message={'Hi Bro, how are you?'} />
-          <SenderChat
-            message={
-              'I am fine bro, what about you. what about your next spaceX program. I wanna join your space progarm.'
-            }
-          />
-          <RecieverChat message={'Yeah Fine bro! come to United State'} />
-          <SenderChat message={'Okay bro. Let meet at ISS'} />
-        </ScrollView>
-      </View>
-
-      {/* <View style={styles.renderChatContaienr}>
+      <View style={styles.renderChatContaienr}>
         <FlatList
-          data={User_Dummy_Data}
+          data={item.chatsHistory}
           renderItem={renderChats}
-          keyExtractor={item => item.senderId}
+          keyExtractor={(item, index) => `${index}`}
         />
-      </View> */}
+      </View>
 
       <View style={styles.divider}></View>
 
@@ -79,7 +56,7 @@ function ChatScreen({route, navigation}) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Icon name={'camera'} size={30} color={'#943f3f'} />
+          <IconButton icon={'camera'} size={30} color={'#943f3f'} />
           <TextInput
             style={styles.searchPersonInput}
             placeholder="Write message"
@@ -89,7 +66,7 @@ function ChatScreen({route, navigation}) {
             autoCorrect={false}
             returnKeyType="done"
           />
-          <Icon name={'send'} size={30} color={'#943f3f'} />
+          <IconButton icon={'send'} size={30} color={'#943f3f'} />
         </View>
       </View>
     </View>
@@ -102,10 +79,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
   },
-  renderChatContaienr: {
-    height: 100,
-    backgroundColor: '#e00707',
-  },
+  renderChatContaienr: {height: 730, backgroundColor: '#cfc5c5'},
   divider: {},
   bottomContainer: {
     width: '100%',
@@ -117,15 +91,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   searchPersonInput: {
-    borderRadius: 10,
-    borderWidth: 1,
+    minWidth: 280,
+    borderRadius: 20,
+    backgroundColor: '#cad0d0',
+    padding: 18,
+    fontSize: 18,
     marginHorizontal: 10,
-    paddingLeft: 6,
-    height: 40,
-    flex: 1,
-    marginTop: 10,
   },
 });

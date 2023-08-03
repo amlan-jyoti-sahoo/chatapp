@@ -2,25 +2,21 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-function ChatCard({senderId, senderName, profileImage}) {
+function ChatCard({item}) {
   const navigation = useNavigation();
 
   function chatCardPressHandler() {
-    const userData = {
-      id: senderId,
-      name: senderName,
-    };
-    navigation.navigate('ChatScreen', userData);
+    navigation.navigate('ChatScreen', {item});
   }
   return (
     <TouchableOpacity onPress={chatCardPressHandler}>
       <View style={styles.chatCard}>
         <Image
-          source={profileImage}
+          source={item.profileImage}
           style={{height: 50, width: 50, borderRadius: 50}}
         />
         <View style={styles.TextSubCard}>
-          <Text style={styles.Name}>{senderName}</Text>
+          <Text style={styles.Name}>{item.senderName}</Text>
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={styles.lastMessage}>Hi how are you</Text>
             <Text>: 7.00pm</Text>

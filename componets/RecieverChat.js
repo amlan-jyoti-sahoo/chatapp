@@ -1,14 +1,12 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
-function RecieverChat({message}) {
+function RecieverChat({message, profileImage}) {
+  console.log(profileImage);
   return (
     <View style={styles.chatsContainer}>
       <View style={styles.chatContainer}>
-        <Image
-          source={require('.././assets/images/elonmusk.jpeg')}
-          style={styles.chatImage}
-        />
+        <Image source={profileImage} style={styles.chatImage} />
         <View style={styles.chat}>
           <Text style={styles.chatText}>{message}</Text>
         </View>

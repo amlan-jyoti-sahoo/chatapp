@@ -21,22 +21,22 @@ export const User_Dummy_Data = [
     senderName: 'ShahRukh Khan',
     profileImage: require('../assets/images/srk.jpeg'),
     chatsHistory: [
-      {sent: 'hi, Elon bhai all Good', recieve: 'Haan bro, badhiya bro'},
+      {sent: 'hi, shahruk bhai', recieve: 'Hlw '},
       {
-        sent: 'Aur next rocket kab lauch kar rahe ho!',
-        recieve: 'ek week mein bro..',
+        sent: 'Aur next movie kab aa rahi hai?',
+        recieve: 'next month to aa rahi hai',
       },
       {
-        sent: 'yaar, mereko bhi jana tha International space station mein',
-        recieve: 'Thik hai, come to us bro',
+        sent: 'Aree haan wo jawaan movie na🔥',
+        recieve: 'Haan bro',
       },
-      {sent: 'Pakka bhejo to', recieve: 'Haan bro trust me'},
+      {sent: 'Free ticket milega kya bro', recieve: 'Yeah bro'},
     ],
   },
   {
     senderId: 3,
-    senderName: 'Peter Parker',
-    profileImage: require('../assets/images/spiderman.jpeg'),
+    senderName: 'Nitin Kalokhe sir',
+    profileImage: require('../assets/images/nitinsir.jpeg'),
     chatsHistory: [
       {sent: 'hi, Elon bhai all Good', recieve: 'Haan bro, badhiya bro'},
       {
@@ -52,8 +52,8 @@ export const User_Dummy_Data = [
   },
   {
     senderId: 4,
-    senderName: 'Nezuko Kamado',
-    profileImage: require('../assets/images/nezuko.jpeg'),
+    senderName: 'Peter Parker',
+    profileImage: require('../assets/images/spiderman.jpeg'),
     chatsHistory: [
       {sent: 'hi, Elon bhai all Good', recieve: 'Haan bro, badhiya bro'},
       {

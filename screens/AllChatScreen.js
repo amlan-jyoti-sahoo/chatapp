@@ -5,17 +5,15 @@ import {
   TextInput,
   View,
   FlatList,
-  TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import QuickImageNameContainer from '../componets/UI/QuickImageNameContainer';
 import ChatCard from '../componets/UI/ChatCard';
 import {User_Dummy_Data} from '../data/user_dummy_data';
 
 function AllChatScreen({navigation}) {
   const [filteredData, setfilteredData] = useState([]);
   const [search, setSearch] = useState('');
-  const textInputRef = useRef(null);
 
   useEffect(() => {
     fetchName();
@@ -46,28 +44,34 @@ function AllChatScreen({navigation}) {
     }
   };
 
-  const ItemView = ({item}) => {
+  const renderItem = ({item}) => {
+    function ProfilePressHandler() {
+      // const userData = {
+      //   id: item.senderId,
+      //   name: item.senderName,
+      // };
+      navigation.navigate('ChatScreen', {item});
+    }
     return (
-      <View style={styles.contactsInnerContainer}>
-        <Image source={item.profileImage} style={styles.avatarImage} />
-        <Text
-          ellipsizeMode="tail"
-          numberOfLines={1}
-          style={{width: 80, textAlign: 'center'}}>
-          {item.senderName}
-        </Text>
-      </View>
+      <TouchableOpacity onPress={ProfilePressHandler}>
+        <View style={styles.contactsInnerContainer}>
+          <Image source={item.profileImage} style={styles.avatarImage} />
+          <Text
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={{width: 80, textAlign: 'center'}}>
+            {item.senderName}
+          </Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 
-  const ItemSeparatorView = () => {
-    return (
-      <View style={{height: 0.5, width: '100%', backgroundColor: '#fc0d0d'}} />
-    );
+  const renderBottomHandler = ({item}) => {
+    return <ChatCard item={item} />;
   };
 
   return (
-    // <TouchableWithoutFeedback onPress={handleTapOutside}>
     <View style={styles.screenContainer}>
       <TextInput
         style={styles.searchPersonInput}
@@ -82,9 +86,8 @@ function AllChatScreen({navigation}) {
       <View style={styles.contactsImageContainer}>
         <FlatList
           data={filteredData}
-          renderItem={ItemView}
+          renderItem={renderItem}
           keyExtractor={item => item.senderId}
-          // ItemSeparatorComponent={ItemSeparatorView}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
@@ -92,19 +95,13 @@ function AllChatScreen({navigation}) {
       <View style={styles.divider}></View>
       <View style={styles.chatCardContainer}>
         <FlatList
-          data={User_Dummy_Data}
-          renderItem={({item}) => (
-            <ChatCard
-              senderId={item.senderId}
-              senderName={item.senderName}
-              profileImage={item.profileImage}
-            />
-          )}
+          data={filteredData}
+          renderItem={renderBottomHandler}
           keyExtractor={item => item.senderId}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </View>
-    // </TouchableWithoutFeedback>
   );
 }
 
@@ -113,21 +110,20 @@ export default AllChatScreen;
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    // backgroundColor: '#cccc',
   },
   searchPersonInput: {
-    borderRadius: 10,
-    borderWidth: 1,
+    minWidth: 250,
+    borderRadius: 20,
+    backgroundColor: '#dadfdf',
+    padding: 15,
+    fontSize: 18,
     marginHorizontal: 10,
-    paddingLeft: 6,
-    height: 40,
     marginTop: 10,
   },
   contactsImageContainer: {
     height: 100,
     margin: 10,
     flexDirection: 'row',
-    // backgroundColor: '#7bff00',
   },
   contactsInnerContainer: {
     height: 100,
