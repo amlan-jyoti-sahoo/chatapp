@@ -15,13 +15,20 @@ function ChatCard({item}) {
     navigation.navigate('ChatScreen');
   }
 
+  function profileImagePressHandler() {
+    dispatch(userSlice.actions.setSelectedUser(item.senderId));
+    navigation.navigate('ProfileImage');
+  }
+
   return (
-    <TouchableOpacity onPress={chatCardPressHandler}>
-      <View style={styles.chatCard}>
+    <View style={styles.chatCard}>
+      <TouchableOpacity onPress={profileImagePressHandler}>
         <Image
           source={item.profileImage}
           style={{height: 50, width: 50, borderRadius: 50}}
         />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={chatCardPressHandler}>
         <View style={styles.TextSubCard}>
           <Text style={styles.Name}>{item.senderName}</Text>
           <View style={{flexDirection: 'row', marginTop: 5}}>
@@ -31,8 +38,8 @@ function ChatCard({item}) {
             <Text>: 7.00pm</Text>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 }
 

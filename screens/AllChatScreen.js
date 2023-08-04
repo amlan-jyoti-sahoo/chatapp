@@ -11,7 +11,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import ChatCard from '../componets/UI/ChatCard';
 import {User_Dummy_Data} from '../data/user_dummy_data';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {userSlice} from '.././store/userSlice';
+
 function AllChatScreen({navigation}) {
+  const dispatch = useDispatch();
+
   const [filteredData, setfilteredData] = useState([]);
   const [search, setSearch] = useState('');
 
@@ -46,11 +51,8 @@ function AllChatScreen({navigation}) {
 
   const renderItem = ({item}) => {
     function ProfilePressHandler() {
-      // const userData = {
-      //   id: item.senderId,
-      //   name: item.senderName,
-      // };
-      navigation.navigate('ChatScreen', {item});
+      dispatch(userSlice.actions.setSelectedUser(item.senderId));
+      navigation.navigate('ChatScreen');
     }
     return (
       <TouchableOpacity onPress={ProfilePressHandler}>

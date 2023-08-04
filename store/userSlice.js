@@ -4,7 +4,6 @@ import {User_Dummy_Data} from '../data/user_dummy_data';
 const initialState = {
   userData: User_Dummy_Data,
   selectedUser: null,
-  chatMessages: [],
 };
 
 export const userSlice = createSlice({
@@ -18,7 +17,19 @@ export const userSlice = createSlice({
     },
 
     addChat: (state, action) => {
-      state.userData[0].chatsHistory.push({sent: action.payload});
+      if (state.selectedUser) {
+        const selectedUserIndex = state.userData.findIndex(
+          user => user.id === state.selectedUser.id,
+        );
+
+        if (selectedUserIndex !== -1) {
+          const newChats = {
+            sent: action.payload,
+          };
+          state.userData[selectedUserIndex].chatsHistory.push(newChats);
+        }
+      }
+
       // console.log(action.payload);
       // console.log('user:', state.selectedUser.senderId);
       //   console.log(userId);
