@@ -10,16 +10,22 @@ import RecieverChat from '../componets/RecieverChat';
 import SenderChat from '../componets/SenderChat';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconButton from '../componets/UI/IconButton';
+import {useDispatch, useSelector} from 'react-redux';
+import {userSlice} from '.././store/userSlice';
 
-function ChatScreen({route, navigation}) {
-  const {item} = route.params;
-  const senderProfileImage = item.profileImage;
+function ChatScreen({navigation}) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user.selectedUser);
+
+  // console.log(user.senderName);
+  // const {item} = route.params;
+  const senderProfileImage = user.profileImage;
   const [message, setMessage] = useState('');
-  const [chatMessages, setchatMessages] = useState(item.chatsHistory);
+  const [chatMessages, setchatMessages] = useState(user.chatsHistory);
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: item.senderName,
+      title: user.senderName,
     });
   }, []);
 
@@ -43,6 +49,7 @@ function ChatScreen({route, navigation}) {
 
   function sendMessageHandler() {
     if (message != '') {
+      dispatch(userSlice.actions.addChat(message));
       const tempMsgs = [...chatMessages];
       setchatMessages([...tempMsgs, {sent: message}]);
     }

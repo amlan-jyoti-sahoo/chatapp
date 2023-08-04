@@ -2,12 +2,19 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {userSlice} from '../../store/userSlice';
+
 function ChatCard({item}) {
   const navigation = useNavigation();
 
+  const dispatch = useDispatch();
+
   function chatCardPressHandler() {
-    navigation.navigate('ChatScreen', {item});
+    dispatch(userSlice.actions.setSelectedUser(item.senderId));
+    navigation.navigate('ChatScreen');
   }
+
   return (
     <TouchableOpacity onPress={chatCardPressHandler}>
       <View style={styles.chatCard}>
