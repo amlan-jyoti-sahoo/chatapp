@@ -33,7 +33,7 @@ function ChatCard({item}) {
           <Text style={styles.Name}>{item.senderName}</Text>
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <Text style={styles.lastMessage}>
-              {item.chatsHistory[item.chatsHistory.length - 1].sent}
+              {item.chatsHistory[item.chatsHistory.length - 1].sent.message}
             </Text>
             <Text style={{color: 'black'}}>: 7.00pm</Text>
           </View>

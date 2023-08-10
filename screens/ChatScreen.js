@@ -85,10 +85,10 @@ function ChatScreen({navigation}) {
   function renderChats({item}) {
     return (
       <>
-        <SenderChat message={item.sent} />
+        <SenderChat message={item.sent.message} />
         {item.recieve != null ? (
           <RecieverChat
-            message={item.recieve}
+            message={item.recieve.message}
             profileImage={senderProfileImage}
           />
         ) : null}
@@ -102,9 +102,9 @@ function ChatScreen({navigation}) {
 
   function sendMessageHandler() {
     if (message != '') {
-      dispatch(userSlice.actions.addChat(message));
+      dispatch(userSlice.actions.addChat({message: message, uri: ''}));
       const tempMsgs = [...chatMessages];
-      setchatMessages([...tempMsgs, {sent: message}]);
+      setchatMessages([...tempMsgs, {sent: {message: message, uri: ''}}]);
     }
     setMessage('');
   }

@@ -24,7 +24,7 @@ export const userSlice = createSlice({
 
         if (selectedUserIndex !== -1) {
           const newChats = {
-            sent: action.payload,
+            sent: {message: action.payload.message, uri: action.payload.uri},
           };
           state.userData[selectedUserIndex].chatsHistory.push(newChats);
         }
