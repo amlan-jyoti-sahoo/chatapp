@@ -73,7 +73,10 @@ function ChatScreen({navigation}) {
     if (!result.didCancel) {
       setPhoto(result);
     }
-    navigation.navigate('PhotoRender', {imageUri: result.assets[0].uri});
+    navigation.navigate('PhotoRender', {
+      imageUri: result.assets[0].uri,
+      functionIdentifier: 'sendMessageHandler',
+    });
   };
 
   useLayoutEffect(() => {
@@ -101,11 +104,24 @@ function ChatScreen({navigation}) {
   }
 
   function sendMessageHandler() {
-    if (message != '') {
-      dispatch(userSlice.actions.addChat({message: message, uri: ''}));
+    console.log('ohh fuck!! cliked');
+    const uri = photo.assets[0].uri;
+    if (message != '' && uri === '') {
+      dispatch(userSlice.actions.addChat({message: message, uri: uri}));
       const tempMsgs = [...chatMessages];
-      setchatMessages([...tempMsgs, {sent: {message: message, uri: ''}}]);
+      setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
     }
+    if (message != '' && uri !== '') {
+      dispatch(userSlice.actions.addChat({message: message, uri: uri}));
+      const tempMsgs = [...chatMessages];
+      setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
+    }
+    if (message == '' && uri !== '') {
+      dispatch(userSlice.actions.addChat({message: message, uri: uri}));
+      const tempMsgs = [...chatMessages];
+      setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
+    }
+
     setMessage('');
   }
 
