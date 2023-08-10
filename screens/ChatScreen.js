@@ -16,6 +16,7 @@ import IconButton from '../componets/UI/IconButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {userSlice} from '.././store/userSlice';
 import PhotoRender from './PhotoRender';
+import SenderImage from '../componets/SenderImage';
 
 function ChatScreen({navigation}) {
   const dispatch = useDispatch();
@@ -38,6 +39,11 @@ function ChatScreen({navigation}) {
       },
     ],
   });
+  // const [isModalVisible, setModalVisible] = useState(false);
+
+  // const toggleModal = () => {
+  //   setModalVisible(!isModalVisible);
+  // };
 
   const requestCameraPermission = async () => {
     try {
@@ -72,11 +78,13 @@ function ChatScreen({navigation}) {
     });
     if (!result.didCancel) {
       setPhoto(result);
+      console.log('above toggle');
+      // toggleModal;
     }
-    navigation.navigate('PhotoRender', {
-      imageUri: result.assets[0].uri,
-      functionIdentifier: 'sendMessageHandler',
-    });
+    // navigation.navigate('PhotoRender', {
+    //   imageUri: result.assets[0].uri,
+    //   functionIdentifier: 'sendMessageHandler',
+    // });
   };
 
   useLayoutEffect(() => {
@@ -88,7 +96,11 @@ function ChatScreen({navigation}) {
   function renderChats({item}) {
     return (
       <>
-        <SenderChat message={item.sent.message} />
+        {item.sent.uri !== '' ? (
+          <SenderImage imageUri={item.sent.uri} message={item.sent.message} />
+        ) : (
+          <SenderChat message={item.sent.message} />
+        )}
         {item.recieve != null ? (
           <RecieverChat
             message={item.recieve.message}
@@ -104,7 +116,6 @@ function ChatScreen({navigation}) {
   }
 
   function sendMessageHandler() {
-    console.log('ohh fuck!! cliked');
     const uri = photo.assets[0].uri;
     if (message != '' && uri === '') {
       dispatch(userSlice.actions.addChat({message: message, uri: uri}));
@@ -121,7 +132,7 @@ function ChatScreen({navigation}) {
       const tempMsgs = [...chatMessages];
       setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
     }
-
+    // setModalVisible(false);
     setMessage('');
   }
 
@@ -134,9 +145,7 @@ function ChatScreen({navigation}) {
           keyExtractor={(item, index) => `${index}`}
         />
       </View>
-
       {/* <View style={styles.divider}></View> */}
-
       <View style={styles.bottomContainer}>
         <View style={styles.bottomInnerContainer}>
           <IconButton

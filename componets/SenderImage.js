@@ -1,12 +1,13 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
-function SenderImage({imageUri}) {
+function SenderImage({imageUri, message}) {
   return (
     <View style={styles.chatsContainer}>
       <View style={styles.chatContainer}>
         <View style={styles.chat}>
-          <Image source={{uri: imageUri}} style={{height: 300, width: 300}} />
+          <Image source={{uri: imageUri}} style={styles.imageChat} />
+          <Text style={styles.chatText}>{message}</Text>
         </View>
         <Image
           source={require('.././assets/images/amlan.jpeg')}
@@ -36,6 +37,13 @@ const styles = StyleSheet.create({
     width: 40,
     borderRadius: 50,
     marginLeft: 10,
+  },
+  imageChat: {
+    borderRadius: 10,
+    margin: 10,
+    marginBottom: 5,
+    height: 300,
+    width: 300,
   },
   chat: {
     paddingHorizontal: 20,
