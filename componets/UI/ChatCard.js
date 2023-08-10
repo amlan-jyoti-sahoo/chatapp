@@ -35,7 +35,7 @@ function ChatCard({item}) {
             <Text style={styles.lastMessage}>
               {item.chatsHistory[item.chatsHistory.length - 1].sent}
             </Text>
-            <Text>: 7.00pm</Text>
+            <Text style={{color: 'black'}}>: 7.00pm</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -58,9 +58,11 @@ const styles = StyleSheet.create({
   Name: {
     fontSize: 20,
     fontWeight: '600',
+    color: 'black',
   },
   lastMessage: {
     fontSize: 14,
     fontWeight: '300',
+    color: 'black',
   },
 });

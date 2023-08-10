@@ -61,7 +61,7 @@ function AllChatScreen({navigation}) {
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
-            style={{width: 80, textAlign: 'center'}}>
+            style={{width: 80, color: 'black', textAlign: 'center'}}>
             {item.senderName}
           </Text>
         </View>
@@ -78,6 +78,7 @@ function AllChatScreen({navigation}) {
       <TextInput
         style={styles.searchPersonInput}
         placeholder="Serach Person"
+        placeholderTextColor={'black'}
         underlineColorAndroid="transparent"
         keyboardType="default"
         autoCorrect={false}
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginHorizontal: 10,
     marginTop: 10,
+    color: 'black',
   },
   contactsImageContainer: {
     height: 100,

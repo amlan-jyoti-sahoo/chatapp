@@ -66,23 +66,18 @@ function ChatScreen({navigation}) {
         />
       </View>
 
-      <View style={styles.divider}></View>
+      {/* <View style={styles.divider}></View> */}
 
       <View style={styles.bottomContainer}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.bottomInnerContainer}>
           <IconButton icon={'camera'} size={30} color={'#943f3f'} />
           <TextInput
             style={styles.searchPersonInput}
             placeholder="Write message"
+            placeholderTextColor={'#232323'}
             value={message}
-            underlineColorAndroid="transparent"
             keyboardType="default"
-            autoCorrect={false}
+            // autoCorrect={false}
             returnKeyType="done"
             onChangeText={messageInputHandler}
           />
@@ -103,27 +98,33 @@ export default ChatScreen;
 const styles = StyleSheet.create({
   Container: {
     flex: 1,
+    backgroundColor: '#cfc5c5',
   },
-  renderChatContaienr: {height: 730, backgroundColor: '#cfc5c5'},
+  renderChatContaienr: {height: '86%', backgroundColor: '#cfc5c5'},
   divider: {},
   bottomContainer: {
     width: '100%',
-    paddingHorizontal: 20,
-    marginHorizontal: 10,
-    height: 100,
-    paddingBottom: 30,
-    bottom: 0,
-    position: 'absolute',
-    flexDirection: 'row',
+    height: '14%',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+  },
+  bottomInnerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    // backgroundColor: 'black',
+    marginVertical: 10,
   },
   searchPersonInput: {
-    minWidth: 280,
+    minWidth: 250,
     borderRadius: 20,
     backgroundColor: '#cad0d0',
-    padding: 18,
+    padding: 13,
     fontSize: 18,
     marginHorizontal: 10,
+    color: 'black',
   },
 });
