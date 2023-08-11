@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     marginBottom: 5,
-    height: 300,
-    width: 300,
+    height: 250,
+    width: 250,
   },
   chat: {
     paddingHorizontal: 20,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    maxWidth: 320,
+    maxWidth: 270,
     minHeight: 40,
   },
   chatText: {
