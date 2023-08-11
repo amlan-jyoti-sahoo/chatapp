@@ -5,11 +5,12 @@ import {
   FlatList,
   TouchableOpacity,
   PermissionsAndroid,
+  Image,
 } from 'react-native';
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import RecieverChat from '../componets/RecieverChat';
 import SenderChat from '../componets/SenderChat';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 import IconButton from '../componets/UI/IconButton';
@@ -39,11 +40,28 @@ function ChatScreen({navigation}) {
       },
     ],
   });
-  // const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  // const toggleModal = () => {
-  //   setModalVisible(!isModalVisible);
-  // };
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+    console.log(isModalVisible);
+  };
+
+  const closeModal = () => {
+    setModalVisible(!isModalVisible);
+    setPhoto({
+      assets: [
+        {
+          fileName: '',
+          fileSize: 64253,
+          height: 1920,
+          type: 'image/jpeg',
+          uri: '',
+          width: 1440,
+        },
+      ],
+    });
+  };
 
   const requestCameraPermission = async () => {
     try {
@@ -72,14 +90,13 @@ function ChatScreen({navigation}) {
 
   const openCamera = async () => {
     const result = await launchCamera({
-      mediaType: 'photo',
+      mediaType: 'mixed',
       quality: 0.5,
       saveToPhotos: true,
     });
     if (!result.didCancel) {
       setPhoto(result);
-      console.log('above toggle');
-      // toggleModal;
+      toggleModal();
     }
     // navigation.navigate('PhotoRender', {
     //   imageUri: result.assets[0].uri,
@@ -117,65 +134,114 @@ function ChatScreen({navigation}) {
 
   function sendMessageHandler() {
     const uri = photo.assets[0].uri;
-    if (message != '' && uri === '') {
-      dispatch(userSlice.actions.addChat({message: message, uri: uri}));
-      const tempMsgs = [...chatMessages];
-      setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
-    }
-    if (message != '' && uri !== '') {
-      dispatch(userSlice.actions.addChat({message: message, uri: uri}));
-      const tempMsgs = [...chatMessages];
-      setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
-    }
-    if (message == '' && uri !== '') {
+    if (message !== '' || uri !== '') {
       dispatch(userSlice.actions.addChat({message: message, uri: uri}));
       const tempMsgs = [...chatMessages];
       setchatMessages([...tempMsgs, {sent: {message: message, uri: uri}}]);
     }
     // setModalVisible(false);
     setMessage('');
+    setPhoto({
+      assets: [
+        {
+          fileName: '',
+          fileSize: 64253,
+          height: 1920,
+          type: 'image/jpeg',
+          uri: '',
+          width: 1440,
+        },
+      ],
+    });
+    closeModal();
   }
 
   return (
-    <View style={styles.Container}>
-      <View style={styles.renderChatContaienr}>
-        <FlatList
-          data={chatMessages}
-          renderItem={renderChats}
-          keyExtractor={(item, index) => `${index}`}
-        />
-      </View>
-      {/* <View style={styles.divider}></View> */}
-      <View style={styles.bottomContainer}>
-        <View style={styles.bottomInnerContainer}>
-          <IconButton
-            icon={'camera'}
-            size={30}
-            color={'#943f3f'}
-            onPress={() => {
-              requestCameraPermission();
-              console.log('camera pressed');
-            }}
-          />
-          <TextInput
-            style={styles.searchPersonInput}
-            placeholder="Write message"
-            placeholderTextColor={'#232323'}
-            value={message}
-            keyboardType="default"
-            // autoCorrect={false}
-            returnKeyType="done"
-            onChangeText={messageInputHandler}
-          />
-          <IconButton
-            icon={'send'}
-            size={30}
-            color={'#943f3f'}
-            onPress={sendMessageHandler}
-          />
+    <>
+      {photo.assets[0].uri ? (
+        <Modal isVisible={isModalVisible}>
+          <View
+            style={{
+              flex: 1,
+              height: '100%',
+              width: '100%',
+              backgroundColor: '#000000',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <IconButton
+              icon="close"
+              size={24}
+              color="black"
+              onPress={closeModal}
+            />
+            <Image
+              source={{uri: photo.assets[0].uri}}
+              style={{height: '100%', width: '100%'}}
+            />
+            <View style={styles.bottomContainer}>
+              <View style={styles.bottomInnerContainer}>
+                <TextInput
+                  style={styles.searchPersonInput}
+                  placeholder="Write message"
+                  placeholderTextColor={'#232323'}
+                  value={message}
+                  keyboardType="default"
+                  // autoCorrect={false}
+                  returnKeyType="done"
+                  onChangeText={messageInputHandler}
+                />
+                <IconButton
+                  icon={'send'}
+                  size={30}
+                  color={'#943f3f'}
+                  onPress={sendMessageHandler}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
+      ) : (
+        <View style={styles.Container}>
+          <View style={styles.renderChatContaienr}>
+            <FlatList
+              data={chatMessages}
+              renderItem={renderChats}
+              keyExtractor={(item, index) => `${index}`}
+            />
+          </View>
+          <View style={styles.bottomContainer}>
+            <View style={styles.bottomInnerContainer}>
+              <IconButton
+                icon={'camera'}
+                size={30}
+                color={'#943f3f'}
+                onPress={() => {
+                  requestCameraPermission();
+                  console.log('camera pressed');
+                }}
+              />
+              <TextInput
+                style={styles.searchPersonInput}
+                placeholder="Write message"
+                placeholderTextColor={'#232323'}
+                value={message}
+                keyboardType="default"
+                // autoCorrect={false}
+                returnKeyType="done"
+                onChangeText={messageInputHandler}
+              />
+              <IconButton
+                icon={'send'}
+                size={30}
+                color={'#943f3f'}
+                onPress={sendMessageHandler}
+              />
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      )}
+    </>
   );
 }
 

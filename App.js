@@ -10,6 +10,7 @@ import ChatScreen from './screens/ChatScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileImage from './screens/ProfileImage';
 import PhotoRender from './screens/PhotoRender';
+import ImageFullScreen from './screens/ImageFullScreen';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ function App() {
           />
           <Stack.Screen name="ProfileImage" component={ProfileImage} />
           <Stack.Screen name="PhotoRender" component={PhotoRender} />
+          <Stack.Screen name="ImageFullScreen" component={ImageFullScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
